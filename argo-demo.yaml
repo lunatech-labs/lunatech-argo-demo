@@ -16,12 +16,10 @@ spec:
 
   - name: setup
     container:
-      image: lunatech.com/argo-demo-setup
+      image: lunatech.com/argo-demo-setup:0.0.1
       args: ["/app/data/log.txt"]
-      imagePullPolicy: Never
 
   - name: do
     container:
-      image: lunatech.com/argo-demo-do
+      image: lunatech.com/argo-demo-do:0.0.1
       args: ["/app/data/log.txt"]
-      imagePullPolicy: Never

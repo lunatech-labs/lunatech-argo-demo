@@ -26,3 +26,7 @@ Playground to learn argo workflows (and how to integrate them with scala).
 	
    You should see `Final message: Writing from setup and from do` and the file `log.txt` should have this content.
 
+6. Now submit the workflow and watch it ~~run~~ fail:
+
+       argo submit --watch argo-demo.yaml
+

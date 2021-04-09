@@ -1,0 +1,27 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: argo-demo-
+spec:
+  entrypoint: all-steps
+
+  templates:
+
+  - name: all-steps
+    steps:
+    - - name: setup
+        template: setup
+    - - name: do
+        template: do
+
+  - name: setup
+    container:
+      image: lunatech.com/argo-demo-setup
+      args: ["/app/data/log.txt"]
+      imagePullPolicy: Never
+
+  - name: do
+    container:
+      image: lunatech.com/argo-demo-do
+      args: ["/app/data/log.txt"]
+      imagePullPolicy: Never

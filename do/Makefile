@@ -6,4 +6,3 @@ do: do.go
 
 clean:
 	rm -f do log.txt
-	docker image rm lunatech.com/argo-demo-do:latest

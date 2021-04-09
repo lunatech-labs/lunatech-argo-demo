@@ -6,4 +6,3 @@ setup: setup.go
 
 clean:
 	rm -f setup log.txt
-	docker image rm lunatech.com/argo-demo-setup:latest

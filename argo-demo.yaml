@@ -3,23 +3,31 @@ kind: Workflow
 metadata:
   generateName: argo-demo-
 spec:
-  entrypoint: all-steps
-
+  entrypoint: main
+  volumeClaimTemplates:                 # define volume, same syntax as k8s Pod spec
+    - metadata:
+        name: workdir                     # name of volume claim
+      spec:
+        accessModes: [ "ReadWriteOnce" ]
+        resources:
+          requests:
+            storage: 1Gi                  # Gi => 1024 * 1024 * 1024
   templates:
-
-  - name: all-steps
+  - name: main
     steps:
     - - name: setup
         template: setup
     - - name: do
         template: do
-
   - name: setup
     container:
       image: lunatech.com/argo-demo-setup:0.0.1
-      args: ["/app/data/log.txt"]
-
+      volumeMounts:                     # same syntax as k8s Pod spec
+      - name: workdir
+        mountPath: /app/data
   - name: do
     container:
       image: lunatech.com/argo-demo-do:0.0.1
-      args: ["/app/data/log.txt"]
+      volumeMounts:                     # same syntax as k8s Pod spec
+      - name: workdir
+        mountPath: /app/data

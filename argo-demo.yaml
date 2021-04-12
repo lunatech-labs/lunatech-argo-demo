@@ -4,14 +4,14 @@ metadata:
   generateName: argo-demo-
 spec:
   entrypoint: main
-  volumeClaimTemplates:                 # define volume, same syntax as k8s Pod spec
+  volumeClaimTemplates:
     - metadata:
-        name: workdir                     # name of volume claim
+        name: workdir
       spec:
         accessModes: [ "ReadWriteOnce" ]
         resources:
           requests:
-            storage: 1Gi                  # Gi => 1024 * 1024 * 1024
+            storage: 1Gi
   templates:
   - name: main
     steps:
@@ -22,12 +22,12 @@ spec:
   - name: setup
     container:
       image: lunatech.com/argo-demo-setup:0.0.1
-      volumeMounts:                     # same syntax as k8s Pod spec
+      volumeMounts:
       - name: workdir
         mountPath: /app/data
   - name: do
     container:
       image: lunatech.com/argo-demo-do:0.0.1
-      volumeMounts:                     # same syntax as k8s Pod spec
+      volumeMounts:
       - name: workdir
         mountPath: /app/data

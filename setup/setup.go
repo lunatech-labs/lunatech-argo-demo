@@ -4,11 +4,13 @@ import (
 	"fmt"
 	"io/ioutil"
 	"log"
+	"os"
 )
 
 func main() {
 	message := []byte("Writing from setup")
-	err := ioutil.WriteFile("/app/data/log.txt", message, 0644)
+	logFile := os.Getenv("LOGFILE")
+	err := ioutil.WriteFile(logFile, message, 0644)
 	if err != nil {
 		log.Fatal(err)
 	}

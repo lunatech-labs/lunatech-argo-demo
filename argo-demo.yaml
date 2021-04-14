@@ -4,6 +4,10 @@ metadata:
   generateName: argo-demo-
 spec:
   entrypoint: main
+  arguments:
+    parameters:
+    - name: logfile
+      value: "/app/data/log.txt"
   volumeClaimTemplates:
     - metadata:
         name: workdir
@@ -25,9 +29,15 @@ spec:
       volumeMounts:
       - name: workdir
         mountPath: /app/data
+      env:
+      - name: LOGFILE
+        value: "{{workflow.parameters.logfile}}"
   - name: do
     container:
       image: lunatech.com/argo-demo-do:0.0.1
       volumeMounts:
       - name: workdir
         mountPath: /app/data
+      env:
+      - name: LOGFILE
+        value: "{{workflow.parameters.logfile}}"

@@ -60,6 +60,10 @@ Playground to learn argo workflows (and how to integrate them with scala).
        argo -n demo submit argo-demo.yaml -p logfile=/app/data/toto.txt --watch
        argo -n demo logs @latest
 
+8. Templates
+
+       argo -n demo template create argo-demo-workflow-template.yaml
+
 ## Notes
 
 - To delete completed jobs, run `k -n demo delete pod -l workflows.argoproj.io/completed=true`
@@ -67,6 +71,7 @@ Playground to learn argo workflows (and how to integrate them with scala).
 
 ## To do
 
+[ ] Reuse a workflow template: https://github.com/argoproj/argo-workflows/blob/master/docs/workflow-templates.md
 [ ] show how to use minio to manage artifacts
 
 

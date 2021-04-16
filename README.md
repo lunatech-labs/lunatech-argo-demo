@@ -49,11 +49,16 @@ Playground to learn argo workflows (and how to integrate them with scala).
        docker run -v $(pwd):/app/data --rm lunatech.com/argo-demo-setup:latest
        docker run -v $(pwd):/app/data --rm lunatech.com/argo-demo-do:latest
 	
-   You should see `Final message: Writing from setup and from do` and the file `log.txt` should have this content.
+   You should see `Writing to /app/data/log.txt from setup and from do` and the file `log.txt` should have this content.
 
-7. Now submit the workflow and watch it ~~run~~ fail:
+7. Now submit the workflow and watch it run:
 
        argo -n submit demo --watch argo-demo.yaml
+
+   You can now change the logfile parameter and see it taken into account in the workflow logs.
+
+       argo -n demo submit argo-demo.yaml -p logfile=/app/data/toto.txt --watch
+       argo -n demo logs @latest
 
 ## Notes
 

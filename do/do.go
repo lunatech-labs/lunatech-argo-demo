@@ -18,5 +18,5 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	fmt.Printf("Final message: %s", upd)
+	fmt.Printf("Updated message: %s", upd)
 }

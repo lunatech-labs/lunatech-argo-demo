@@ -23,9 +23,11 @@ Playground to learn argo workflows (and how to integrate them with scala).
 
 3. [Install Argo](https://argoproj.github.io/argo-workflows/quick-start/):
 
+       kubectl create ns argo
+       kubectl create ns demo
        helm repo add argo https://argoproj.github.io/argo-helm
 	   helm repo update
-       helm install argo argo/argo
+       helm install argo argo/argo -n argo
 
    Download the argo CLI [there](https://github.com/argoproj/argo-workflows/releases), install it, then check your installation by running:
 
@@ -51,7 +53,12 @@ Playground to learn argo workflows (and how to integrate them with scala).
 
 7. Now submit the workflow and watch it ~~run~~ fail:
 
-       argo submit --watch argo-demo.yaml
+       argo -n submit demo --watch argo-demo.yaml
+
+## Notes
+
+- To delete completed jobs, run `k -n demo delete pod -l workflows.argoproj.io/completed=true`
+
 
 ## To do
 

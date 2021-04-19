@@ -69,6 +69,7 @@ You can now change the `logfile` parameter and see it taken into account in the 
 We can change the kind of this Workflow to a WorkflowTemplate one, to reuse it. First create it in the cluster:
 
     argo -n demo template create argo-demo-workflow-template.yaml
+	argo template list -A
 
 We can now submit a small workflow containing only a reference to this WorkflowTemplate:
 
@@ -83,11 +84,22 @@ We can change the parameters different values for the parameters with two ways: 
 
 ### Using the REST API
 
-    curl http://localhost:2746/api/v1/workflows/demo | jq .items[].metadata.name
+First let's clean the namespace
 
+	argo template list -A
+	argo -n demo template delete argo-demo-workflow-template
+	kubectl -n demo delete pod -l workflows.argoproj.io/completed=true`
+
+Now let's re-add the template and use it in the same workflows
+
+    curl -H 'Content-Type: application/json' http://localhost:2746/api/v1/workflow-templates/demo -d @argo-demo-workflow-template.json 
 	curl -H 'Content-Type: application/json' http://localhost:2746/api/v1/workflows/demo -d @argo-demo-using-template-no-params.json 
-
+	argo -n demo watch @latest
+	argo -n demo logs @latest
     curl -H 'Content-Type: application/json' http://localhost:2746/api/v1/workflows/demo -d @argo-demo-using-template.json
+	argo -n demo logs @latest
+
+    curl http://localhost:2746/api/v1/workflows/demo | jq .items[].metadata.name
 
 ### Using the GUI
 

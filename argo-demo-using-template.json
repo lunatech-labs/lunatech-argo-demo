@@ -17,7 +17,7 @@
 	"parameters": [
 	  {
 	    "name": "logfile",
-	    "value": "/app/data/using-template-rest.txt"
+	    "value": "/app/data/using-template-json.txt"
 	  }
 	]
       }

@@ -1,0 +1,11 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: argo-demo-template-
+spec:
+  arguments:
+    parameters:
+      - name: logfile
+        value: "/app/data/using-template.txt"
+  workflowTemplateRef:
+    name: argo-demo-template

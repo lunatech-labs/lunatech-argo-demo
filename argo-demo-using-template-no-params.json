@@ -1,0 +1,18 @@
+{
+  "namespace": "demo",
+  "serverDryRun": false,
+  "workflow": {
+    "metadata": {
+      "generateName": "argo-demo-template-",
+      "namespace": "demo",
+      "labels": {
+        "workflows.argoproj.io/completed": "false"
+      }
+    },
+    "spec": {
+      "workflowTemplateRef": {
+	"name": "argo-demo-template"
+      }
+    }
+  }
+}

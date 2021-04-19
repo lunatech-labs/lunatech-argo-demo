@@ -9,7 +9,7 @@ Playground to learn argo workflows (and how to integrate them with scala).
 
        helm repo add minio https://helm.min.io
 	   helm repo update
-	   helm install minio minio/minio --set service.type=LoadBalancer
+       helm install minio minio/minio --set service.type=LoadBalancer
 
    Create an alias for the argo artifacts:
 
@@ -31,14 +31,14 @@ Playground to learn argo workflows (and how to integrate them with scala).
 
    Download the argo CLI [there](https://github.com/argoproj/argo-workflows/releases), install it, then check your installation by running:
 
-       argo submit https://raw.githubusercontent.com/argoproj/argo/master/examples/hello-world.yaml --watch
-       argo list
-       argo get @latest
-       argo logs @latest
+       argo -n demo submit https://raw.githubusercontent.com/argoproj/argo/master/examples/hello-world.yaml --watch
+       argo -n demo list
+       argo -n demo get @latest
+       argo -n demo logs @latest
 	   
    If you want to use the web UI, change its k8s type to LoadBalancer with
    
-       kubectl patch svc argo-server -p '{"spec": {"type": "LoadBalancer"}}'
+       kubectl -n argo patch svc argo-server -p '{"spec": {"type": "LoadBalancer"}}'
 	   
    then visit http://localhost:2746.
 
@@ -82,6 +82,14 @@ We can change the parameters different values for the parameters with two ways: 
 	argo -n demo logs @latest
 
 ### Using the REST API
+
+    curl http://localhost:2746/api/v1/workflows/demo | jq .items[].metadata.name
+
+	curl -H 'Content-Type: application/json' http://localhost:2746/api/v1/workflows/demo -d @argo-demo-using-template-no-params.json 
+
+    curl -H 'Content-Type: application/json' http://localhost:2746/api/v1/workflows/demo -d @argo-demo-using-template.json
+
+### Using the GUI
 
 TODO
 

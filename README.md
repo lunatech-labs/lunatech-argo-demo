@@ -51,18 +51,39 @@ Playground to learn argo workflows (and how to integrate them with scala).
 	
    You should see `Writing to /app/data/log.txt from setup and from do` and the file `log.txt` should have this content.
 
-7. Now submit the workflow and watch it run:
+## Usage
 
-       argo -n submit demo --watch argo-demo.yaml
+### Submitting a workflow
 
-   You can now change the logfile parameter and see it taken into account in the workflow logs.
+Submit the workflow and watch it run:
 
-       argo -n demo submit argo-demo.yaml -p logfile=/app/data/toto.txt --watch
-       argo -n demo logs @latest
+	argo -n demo submit --watch argo-demo.yaml
 
-8. Templates
+You can now change the `logfile` parameter and see it taken into account in the workflow logs.
 
-       argo -n demo template create argo-demo-workflow-template.yaml
+	argo -n demo submit argo-demo.yaml -p logfile=/app/data/toto.txt --watch
+	argo -n demo logs @latest
+
+### Templates
+
+We can change the kind of this Workflow to a WorkflowTemplate one, to reuse it. First create it in the cluster:
+
+    argo -n demo template create argo-demo-workflow-template.yaml
+
+We can now submit a small workflow containing only a reference to this WorkflowTemplate:
+
+    argo -n demo submit argo-demo-using-template-no-params.yaml --watch
+
+We can change the parameters different values for the parameters with two ways: from within a workflow definition or as CLI arguments:
+
+	argo -n demo submit argo-demo-using-template.yaml --watch
+	argo -n demo logs @latest
+	argo -n demo submit argo-demo-using-template-no-params.yaml --watch -p logfile="/app/data/template-workflow-cli-params.txt"
+	argo -n demo logs @latest
+
+### Using the REST API
+
+TODO
 
 ## Notes
 
@@ -71,7 +92,6 @@ Playground to learn argo workflows (and how to integrate them with scala).
 
 ## To do
 
-[ ] Reuse a workflow template: https://github.com/argoproj/argo-workflows/blob/master/docs/workflow-templates.md
 [ ] show how to use minio to manage artifacts
 
 

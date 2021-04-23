@@ -43,11 +43,11 @@ Playground to learn argo workflows (and how to integrate them with scala).
    then visit http://localhost:2746.
 
 4. [Install Go](https://golang.org/doc/tutorial/getting-started)
-5. Run `make`, check that the docker images are built with `docker image ls | grep argo-demo`. You should see `lunatech.com/argo-demo-do` and `lunatech.com/argo-demo-setup`
+5. Run `make`, check that the docker images are built with `docker image ls | grep argo-demo`. You should see `lunatech-labs/argo-demo-do` and `lunatech-labs/argo-demo-setup`
 6. Run these commands to see it working locally:
 
-       docker run -v $(pwd):/app/data --rm lunatech.com/argo-demo-setup:latest
-       docker run -v $(pwd):/app/data --rm lunatech.com/argo-demo-do:latest
+       docker run -v $(pwd):/app/data --rm lunatech-labs/argo-demo-setup:latest
+       docker run -v $(pwd):/app/data --rm lunatech-labs/argo-demo-do:latest
 	
    You should see `Writing to /app/data/log.txt from setup and from do` and the file `log.txt` should have this content.
 
@@ -75,7 +75,7 @@ We can now submit a small workflow containing only a reference to this WorkflowT
 
     argo -n demo submit argo-demo-using-template-no-params.yaml --watch
 
-We can change the parameters different values for the parameters with two ways: from within a workflow definition or as CLI arguments:
+We can change the parameters in two ways: from within a workflow definition or as CLI arguments:
 
 	argo -n demo submit argo-demo-using-template.yaml --watch
 	argo -n demo logs @latest

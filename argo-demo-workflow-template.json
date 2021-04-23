@@ -53,7 +53,7 @@
 	{
           "name": "setup",
           "container": {
-            "image": "lunatech.com/argo-demo-setup:0.0.1",
+            "image": "ghcr.io/lunatech-labs/lunatech-argo-demo/argo-demo-setup:0.0.1",
             "env": [
               {
 		"name": "LOGFILE",
@@ -71,7 +71,7 @@
 	{
           "name": "do",
           "container": {
-            "image": "lunatech.com/argo-demo-do:0.0.1",
+            "image": "ghcr.io/lunatech-labs/lunatech-argo-demo/argo-demo-do:0.0.1",
             "env": [
               {
 		"name": "LOGFILE",

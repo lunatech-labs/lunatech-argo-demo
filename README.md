@@ -5,23 +5,7 @@ Playground to learn argo workflows (and how to integrate them with scala).
 ## Installation
 
 1. Turn on the local kubernetes cluster on docker for Mac if it's not yet running and switch to its context
-2. Install [Minio](https://min.io/):
-
-       helm repo add minio https://helm.min.io
-	   helm repo update
-       helm install minio minio/minio --set service.type=LoadBalancer
-
-   Create an alias for the argo artifacts:
-
-       export MINIO_ACCESS_KEY=$(kubectl get secret minio --namespace default -o jsonpath="{.data.accesskey}" | base64 --decode)
-       export MINIO_SECRET_KEY=$(kubectl get secret minio --namespace default -o jsonpath="{.data.secretkey}" | base64 --decode)
-       mc alias set minio http://localhost:9000 "$MINIO_ACCESS_KEY" "$MINIO_SECRET_KEY" --api s3v4
-
-   And now a bucket to host our files:
-   
-       mc mb minio/argo-artifacts
-
-3. [Install Argo](https://argoproj.github.io/argo-workflows/quick-start/):
+2. [Install Argo](https://argoproj.github.io/argo-workflows/quick-start/):
 
        kubectl create ns argo
        kubectl create ns demo
@@ -41,15 +25,6 @@ Playground to learn argo workflows (and how to integrate them with scala).
        kubectl -n argo patch svc argo-server -p '{"spec": {"type": "LoadBalancer"}}'
 	   
    then visit http://localhost:2746.
-
-4. [Install Go](https://golang.org/doc/tutorial/getting-started)
-5. Run `make`, check that the docker images are built with `docker image ls | grep argo-demo`. You should see `lunatech-labs/argo-demo-do` and `lunatech-labs/argo-demo-setup`
-6. Run these commands to see it working locally:
-
-       docker run -v $(pwd):/app/data --rm lunatech-labs/argo-demo-setup:latest
-       docker run -v $(pwd):/app/data --rm lunatech-labs/argo-demo-do:latest
-	
-   You should see `Writing to /app/data/log.txt from setup and from do` and the file `log.txt` should have this content.
 
 ## Usage
 
@@ -109,10 +84,35 @@ TODO
 
 - To delete completed jobs, run `k -n demo delete pod -l workflows.argoproj.io/completed=true`
 
+- To install and use [Minio](https://min.io/):
+
+       helm repo add minio https://helm.min.io
+	   helm repo update
+       helm install minio minio/minio --set service.type=LoadBalancer
+
+   Create an alias for the argo artifacts:
+
+       export MINIO_ACCESS_KEY=$(kubectl get secret minio --namespace default -o jsonpath="{.data.accesskey}" | base64 --decode)
+       export MINIO_SECRET_KEY=$(kubectl get secret minio --namespace default -o jsonpath="{.data.secretkey}" | base64 --decode)
+       mc alias set minio http://localhost:9000 "$MINIO_ACCESS_KEY" "$MINIO_SECRET_KEY" --api s3v4
+
+   And now a bucket to host our files:
+   
+       mc mb minio/argo-artifacts
+
+## To build locally
+
+1. [Install Go](https://golang.org/doc/tutorial/getting-started)
+2. Run `make`, check that the docker images are built with `docker image ls | grep argo-demo`. You should see `lunatech-labs/argo-demo-do` and `lunatech-labs/argo-demo-setup`
+3. Run these commands to see it working locally:
+
+       docker run -v $(pwd):/app/data --rm lunatech-labs/argo-demo-setup:latest
+       docker run -v $(pwd):/app/data --rm lunatech-labs/argo-demo-do:latest
+	
+   You should see `Writing to /app/data/log.txt from setup and from do` and the file `log.txt` should have this content.
 
 ## To do
 
 [ ] show how to use minio to manage artifacts
-
 
 

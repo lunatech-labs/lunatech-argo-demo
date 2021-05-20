@@ -1,0 +1,16 @@
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: native-k8s-pv
+  namespace: demo
+  labels:
+    type: local
+spec:
+  storageClassName: hostPath
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: "/tmp/argo-demo"

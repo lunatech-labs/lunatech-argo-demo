@@ -1,0 +1,28 @@
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: native-k8s
+  namespace: demo
+spec:
+  template:
+    spec:
+      volumes:
+      - name: native-k8s-data
+        persistentVolumeClaim:
+          claimName: native-k8s-pv-claim
+      containers:
+      - name: setup
+        image: ghcr.io/lunatech-labs/lunatech-argo-demo/argo-demo-setup:0.0.1
+        command: ["/app/setup"]
+        volumeMounts:
+        - name: native-k8s-data
+          mountPath: /app/data
+      - name: do
+        image: ghcr.io/lunatech-labs/lunatech-argo-demo/argo-demo-do:0.0.1
+        command: ["/app/do"]
+        volumeMounts:
+        - name: native-k8s-data
+          mountPath: "/app/data"
+      restartPolicy: Never
+  backoffLimit: 1      

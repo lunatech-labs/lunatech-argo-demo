@@ -15,7 +15,7 @@ Playground to learn argo workflows (and how to integrate them with scala).
 
    Download the argo CLI [there](https://github.com/argoproj/argo-workflows/releases), install it, then check your installation by running:
 
-       argo -n demo submit https://raw.githubusercontent.com/argoproj/argo/master/examples/hello-world.yaml --watch
+       argo -n demo submit https://raw.githubusercontent.com/argoproj/argo-workflows/master/examples/workflow-template/hello-world.yaml --watch
        argo -n demo list
        argo -n demo get @latest
        argo -n demo logs @latest
